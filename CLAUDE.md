@@ -75,10 +75,13 @@ System.IO.Compression version-conflict warning is harmless.
    `package/CHANGELOG.md` (the script refuses to package without it).
    Update `package/README.md` if the mod's behavior or config changed.
 2. Commit, tag `<modname-lowercase>-v<version>` (e.g.
-   `otinventorylayout-v1.0.0`). Push to `origin`
-   (github.com/tblisonb/ot-valheim-mods) only when the user asks.
+   `otinventorylayout-v1.0.0`).
 3. `./package.py <Mod>`, after committing, so the git hash stamped into the
    DLL is the release commit. Then delete the flat-copied DLL from Modding
    (see above).
-4. The user uploads to Hexium through its web UI (there's no publish API).
+4. Push `main` and the new tag to `origin`
+   (github.com/tblisonb/ot-valheim-mods) without asking - building the
+   release zip is standing authorization. Outside a release, push only when
+   the user asks. Never force-push.
+5. The user uploads to Hexium through its web UI (there's no publish API).
    Package rules are in README's "Publishing to Hexium".
