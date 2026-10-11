@@ -662,6 +662,15 @@ vanilla's `RPC_SetVisualItem` (plus the private `UpdateSupports`, which
 `SetVisualItem` skips when clearing). Slots holding an item whose prefab
 this client lacks are left out of the mirror so they can't be cleared.
 
+**Attach override (`1.0.1`):** vanilla `ArmorStand.CanAttach` tests a slot
+against an item's `m_attachOverride` when one is set. The 1.0 Hood of the
+Vanguard (`HelmetDNMediumHood`) is a Helmet with override `Material` (read
+from the bundles with UnityPy; no other helmet has one), so vanilla
+refuses it everywhere though it has an `attach_skin` model like the other
+hoods. `Stands.SlotTakes` also accepts an item whose own type the slot
+supports, used by the panel and by a `CanAttach` postfix for hotbar
+attach. Confirmed in-game at `1.0.1`.
+
 **The stand-in Container:** `InventoryGui.Show` needs a `Container`. The
 mod adds one on an inactive child of the stand, with its private
 `m_nview` and `m_inventory` set by reflection. Inactive means its `Awake`
