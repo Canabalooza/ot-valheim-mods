@@ -17,7 +17,7 @@ namespace OtArmorStand
     {
         public const string PluginGuid = "tlisonbee.valheim.otarmorstand";
         public const string PluginName = "OtArmorStand";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.1";
 
         internal static ManualLogSource Log;
 

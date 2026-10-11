@@ -24,9 +24,35 @@ namespace OtArmorStand
             return null;
         }
 
+        // Vanilla's slot-type test, ArmorStand.CanAttach, judges an item by its m_attachOverride
+        // when one is set. The 1.0 Hood of the Vanguard (HelmetDNMediumHood) is a Helmet whose
+        // override is Material, so no head slot takes it even though it has an attach_skin model
+        // like every other hood. Accept an item whose own type the slot supports as well.
+        internal static bool SlotTakes(ArmorStand.ArmorStandSlot slot, ItemDrop.ItemData item)
+        {
+            var shared = item.m_shared;
+            return slot.m_supportedTypes.Count == 0 ||
+                slot.m_supportedTypes.Contains(shared.m_itemType) ||
+                (shared.m_attachOverride != ItemDrop.ItemData.ItemType.None && slot.m_supportedTypes.Contains(shared.m_attachOverride));
+        }
+
         internal static void CantAttach()
         {
             Player.m_localPlayer?.Message(MessageHud.MessageType.Center, "$piece_armorstand_cantattach");
+        }
+    }
+
+    // Hotbar attach (ArmorStand.UseItem) goes through CanAttach, so widen it the same way the
+    // panel does; see Stands.SlotTakes.
+    [HarmonyPatch(typeof(ArmorStand), "CanAttach")]
+    internal static class CanAttachPatch
+    {
+        private static void Postfix(ArmorStand.ArmorStandSlot slot, ItemDrop.ItemData item, ref bool __result)
+        {
+            if (!__result && item != null)
+            {
+                __result = Stands.SlotTakes(slot, item);
+            }
         }
     }
 

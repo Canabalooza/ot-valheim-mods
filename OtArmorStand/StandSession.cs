@@ -464,8 +464,8 @@ namespace OtArmorStand
             return new Vector2i(-1, -1);
         }
 
-        // Vanilla's ArmorStand.CanAttach plus the check in ArmorStand.UseItem that anything other
-        // than chest and legs has an "attach" model to show.
+        // Vanilla's ArmorStand.CanAttach (widened by Stands.SlotTakes) plus the check in
+        // ArmorStand.UseItem that anything other than chest and legs has an "attach" model to show.
         private static bool CanAttach(ArmorStand.ArmorStandSlot slot, ItemDrop.ItemData item)
         {
             if (item.m_dropPrefab == null)
@@ -473,8 +473,7 @@ namespace OtArmorStand
                 return false;
             }
             var shared = item.m_shared;
-            var type = shared.m_attachOverride != ItemDrop.ItemData.ItemType.None ? shared.m_attachOverride : shared.m_itemType;
-            if (slot.m_supportedTypes.Count > 0 && !slot.m_supportedTypes.Contains(type))
+            if (!Stands.SlotTakes(slot, item))
             {
                 return false;
             }

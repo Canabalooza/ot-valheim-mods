@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+- The Hood of the Vanguard now goes in an armor stand's head slot, from the
+  panel or by using it from the hotbar. The game flags the hood to attach
+  as a material, so vanilla stands refuse it.
+
 ## 1.0.0
 
 Initial release.
